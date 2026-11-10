@@ -107,6 +107,14 @@ export function SettingsDialog({ onClose }: SettingsDialogProps): React.JSX.Elem
         <p className="form-hint">{t('settingsDialog.autosaveHint')}</p>
       </section>
       <section className="form-section">
+        <h3 className="form-section__title">{t('settingsDialog.updates')}</h3>
+        <label className="checkbox">
+          <input type="checkbox" checked={settings.autoUpdate} onChange={(event) => update({ autoUpdate: event.target.checked })} />
+          <span>{t('settingsDialog.autoUpdate')}</span>
+        </label>
+        <p className="form-hint">{t('settingsDialog.autoUpdateHint')}</p>
+      </section>
+      <section className="form-section">
         <h3 className="form-section__title">{t('settingsDialog.workspace')}</h3>
         <label className="checkbox">
           <input

@@ -175,7 +175,7 @@ describe('menu bar', () => {
     expect(implemented).toContain('settings.preferences');
     expect(implemented).toContain('file.open');
     expect(implemented).toContain('view.zoomIn');
-    for (const id of implemented) expect(getCommand(id).phase, id).toBeLessThanOrEqual(8);
+    for (const id of implemented) expect(getCommand(id).phase, id).toBeLessThanOrEqual(8); // the last phase
     expect(implemented).toContain('file.save');
     expect(implemented).not.toContain('file.print');
     expect(implemented).not.toContain('tools.compress');

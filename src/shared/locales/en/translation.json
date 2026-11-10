@@ -173,7 +173,8 @@
       "languageUk": "Українська"
     },
     "help": {
-      "about": "About PDF Editor"
+      "about": "About PDF Editor",
+      "checkUpdates": "Check for Updates…"
     }
   },
   "toolbar": {
@@ -292,7 +293,10 @@
       "300": "Every 5 minutes",
       "600": "Every 10 minutes"
     },
-    "custom": "Every {{count}} s"
+    "custom": "Every {{count}} s",
+    "updates": "Updates",
+    "autoUpdate": "Check for new versions automatically",
+    "autoUpdateHint": "This is the only time the application uses the network: it asks the release server whether a newer version exists and downloads it. Your documents are never sent anywhere."
   },
   "about": {
     "title": "About",
@@ -603,5 +607,23 @@
     "discardConfirm": "The unsaved changes in these copies will be lost permanently.",
     "failedTitle": "The document could not be recovered",
     "unreadable": "the recovery copy cannot be read"
+  },
+  "updates": {
+    "title": "Updates",
+    "later": "Later",
+    "restart": "Restart and Install",
+    "openDownloadPage": "Open Download Page",
+    "manualNote": "On macOS this version cannot install updates by itself. Download the new version from the release page and replace the application.",
+    "readyNote": "The update will also be installed the next time you quit the application.",
+    "status": {
+      "idle": "No check has been made yet.",
+      "unavailable": "Updates work only in the installed application.",
+      "checking": "Checking for updates…",
+      "upToDate": "You have the latest version ({{current}}).",
+      "available": "Version {{version}} is available (you have {{current}}).",
+      "downloading": "Downloading version {{version}}: {{progress}}%",
+      "ready": "Version {{version}} has been downloaded and is ready to install.",
+      "error": "Could not check for updates. Check your internet connection and try again."
+    }
   }
 }

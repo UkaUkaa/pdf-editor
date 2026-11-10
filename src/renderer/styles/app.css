@@ -1700,3 +1700,12 @@ fieldset {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* --- Update dialog ------------------------------------------------------------------------- */
+
+.update-progress {
+  width: 100%;
+  height: 8px;
+  margin-bottom: 12px;
+  accent-color: var(--color-accent, #2563eb);
+}

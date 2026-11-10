@@ -14,6 +14,8 @@ files:
   - "!node_modules/**"
 
 asar: true
+# Names without spaces, exactly as they are listed in the update description files.
+artifactName: PDF-Editor-${version}-${os}-${arch}.${ext}
 icon: build/icon.png
 
 # Switches compiled into the Electron binary: the installed application cannot be
@@ -45,6 +47,7 @@ win:
       arch: [x64, arm64]
 
 nsis:
+  artifactName: PDF-Editor-Setup-${version}-win-${arch}.${ext}
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
@@ -61,4 +64,11 @@ fileAssociations:
     role: Editor
     rank: Owner
 
-publish: null
+# Where the installed application looks for new versions: a public repository that holds
+# only installers (the source repository is private). Building never uploads anything;
+# the files in dist/ are attached to a release there by hand or with `gh release create`.
+publish:
+  provider: github
+  owner: UkaUkaa
+  repo: pdf-editor-releases
+  releaseType: release

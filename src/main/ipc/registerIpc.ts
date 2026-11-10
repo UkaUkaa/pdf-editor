@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { userInfo } from 'node:os';
 import { app, BrowserWindow, dialog, ipcMain, shell, type IpcMainEvent, type IpcMainInvokeEvent } from 'electron';
 import { z } from 'zod';
-import { IPC } from '@shared/constants/ipc';
+import { IPC, RELEASES_PAGE_URL } from '@shared/constants/ipc';
 import { APP_ROLES, COMMAND_IDS, type CommandId, type CommandState } from '@shared/menu/commands';
 import { translate } from '@shared/locales';
 import { settingsPatchSchema } from '@shared/schemas/settings';
@@ -37,6 +37,7 @@ import type { OpenRequestQueue } from '../services/openRequests';
 import type { RecentFilesStore } from '../services/recentFiles';
 import type { SettingsStore } from '../services/settingsStore';
 import type { SystemFontCatalogue } from '../services/systemFonts';
+import type { UpdateService } from '../services/updates';
 
 const commandIdSchema = z.enum(COMMAND_IDS as [CommandId, ...CommandId[]]);
 const commandStateSchema = z.strictObject({
@@ -67,6 +68,7 @@ export interface IpcDependencies {
   recovery: RecoveryStore;
   openRequests: OpenRequestQueue;
   fonts: SystemFontCatalogue;
+  updates: UpdateService;
   onDirtyChange: (dirty: boolean) => void;
   onCommandState: (state: CommandState) => void;
 }
@@ -78,7 +80,7 @@ function assertTrusted(event: IpcMainEvent | IpcMainInvokeEvent): void {
 }
 
 /** Registers every IPC endpoint. Each one validates its sender and its payload. */
-export function registerIpc({ settings, recentFiles, recovery, openRequests, fonts, onDirtyChange, onCommandState }: IpcDependencies): void {
+export function registerIpc({ settings, recentFiles, recovery, openRequests, fonts, updates, onDirtyChange, onCommandState }: IpcDependencies): void {
   // The renderer may only write where the user pointed: files it opened or chose in a
   // save dialog, and directories chosen in a folder dialog.
   const writableFiles = new Set<string>();
@@ -268,6 +270,27 @@ export function registerIpc({ settings, recentFiles, recovery, openRequests, fon
     assertTrusted(event);
     await recentFiles.clear();
     app.clearRecentDocuments();
+  });
+
+  ipcMain.handle(IPC.updatesGetState, (event) => {
+    assertTrusted(event);
+    return updates.getState();
+  });
+
+  ipcMain.handle(IPC.updatesCheck, (event) => {
+    assertTrusted(event);
+    return updates.check(true);
+  });
+
+  ipcMain.handle(IPC.updatesInstall, (event) => {
+    assertTrusted(event);
+    return updates.install();
+  });
+
+  // A fixed address: the renderer cannot make this open anything else.
+  ipcMain.handle(IPC.updatesOpenDownloadPage, async (event) => {
+    assertTrusted(event);
+    await shell.openExternal(RELEASES_PAGE_URL);
   });
 
   ipcMain.handle(IPC.fontsList, (event) => {

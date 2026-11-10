@@ -73,6 +73,19 @@ tests/e2e/      Playwright на собранном приложении
 - В asar не попадает `node_modules`. Если main-процессу понадобится пакет во время работы, его нужно
   включить в бандл (`externalizeDeps.exclude` в `electron.vite.config.ts`), иначе установленное приложение не запустится.
 
+## Выпуск новой версии
+
+1. Поднять `version` в `package.json`, дописать `CHANGELOG.md`.
+2. `npm run check`, `npm run test:e2e`.
+3. `npm run package:mac` и `npm run package:win` — сборка ничего не выгружает.
+4. Опубликовать в **публичном** репозитории выпусков обычным (не предварительным) релизом с тегом `v<версия>`:
+   оба `.dmg`, `.exe`, все три `.blockmap`, `latest.yml` и `latest-mac.yml`. Имена файлов менять нельзя — они
+   записаны в `latest*.yml`. Пример:
+   `cd dist && gh release create v0.12.0 --repo UkaUkaa/pdf-editor-releases --title "PDF Editor 0.12.0" --notes-file notes.md *.dmg *.exe *.blockmap latest.yml latest-mac.yml`
+5. Проверить: установленная предыдущая версия должна найти новую («Справка → Проверить обновления…»).
+
+Предварительные релизы и релизы без `latest*.yml` приложение не увидит.
+
 ## Шрифты
 
 - Коммерческие шрифты (Times New Roman, Arial…) в репозиторий и в поставку не добавляются — только чтение установленных в системе.

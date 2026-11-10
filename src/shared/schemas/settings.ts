@@ -28,6 +28,7 @@ export const storedSettingsSchema = z.object({
   authorName: z.string().max(80).catch(''),
   ocrLanguages: ocrLanguages.catch(DEFAULT_SETTINGS.ocrLanguages),
   autosaveInterval: autosaveInterval.catch(DEFAULT_SETTINGS.autosaveInterval),
+  autoUpdate: z.boolean().catch(DEFAULT_SETTINGS.autoUpdate),
   layout: z
     .object({
       leftWidth: panelWidth.catch(DEFAULT_LAYOUT.leftWidth),
@@ -46,6 +47,7 @@ export const settingsPatchSchema = z.strictObject({
   authorName: z.string().max(80).optional(),
   ocrLanguages: ocrLanguages.optional(),
   autosaveInterval: autosaveInterval.optional(),
+  autoUpdate: z.boolean().optional(),
   layout: z
     .strictObject({
       leftWidth: panelWidth.optional(),

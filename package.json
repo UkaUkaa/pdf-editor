@@ -1,7 +1,7 @@
 {
   "name": "pdf-editor",
   "productName": "PDF Editor",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Professional cross-platform PDF editor",
   "private": true,
   "license": "UNLICENSED",
@@ -17,6 +17,7 @@
     "@tesseract.js-data/rus": "1.0.0",
     "@tesseract.js-data/ukr": "1.0.0",
     "dejavu-fonts-ttf": "2.37.3",
+    "electron-updater": "6.8.11",
     "fflate": "0.8.3",
     "i18next": "27.1.1",
     "lucide-react": "1.71.0",
@@ -61,8 +62,8 @@
     "test:watch": "vitest",
     "test:e2e": "npm run build && playwright test",
     "check": "npm run typecheck && npm run lint && npm run test",
-    "package:mac": "npm run build && electron-builder --mac",
-    "package:win": "npm run build && electron-builder --win",
+    "package:mac": "npm run build && electron-builder --mac --publish never",
+    "package:win": "npm run build && electron-builder --win --publish never",
     "assets": "node scripts/copy-pdfjs-assets.mjs",
     "fixtures": "node scripts/make-fixtures.mjs",
     "icon": "node scripts/make-icon.mjs"

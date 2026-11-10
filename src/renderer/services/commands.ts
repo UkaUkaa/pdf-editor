@@ -1,3 +1,4 @@
+import { checkForUpdates } from '../features/updates/updates';
 import { COMMAND_IDS, getCommand, type CommandId, type CommandState } from '@shared/menu/commands';
 import type { DocumentModel, ViewMode } from '@shared/types/document';
 import { DEFAULT_LAYOUT, type AppSettings, type Language, type ThemePreference } from '@shared/types/settings';
@@ -361,6 +362,7 @@ const HANDLERS: Partial<Record<CommandId, CommandHandler>> = {
   'settings.languageEn': language('en'),
   'settings.languageRu': language('ru'),
   'settings.languageUk': language('uk'),
+  'help.checkUpdates': { run: () => void checkForUpdates() },
   'help.about': { run: () => useUiStore.getState().openDialog('about') },
 };
 

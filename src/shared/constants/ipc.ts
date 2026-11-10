@@ -24,6 +24,11 @@ export const IPC = {
   recentList: 'recent:list',
   recentAdd: 'recent:add',
   recentClear: 'recent:clear',
+  updatesGetState: 'updates:get-state',
+  updatesCheck: 'updates:check',
+  updatesInstall: 'updates:install',
+  updatesOpenDownloadPage: 'updates:open-download-page',
+  updatesState: 'updates:state',
   fontsList: 'fonts:list',
   fontsRead: 'fonts:read',
   recoveryList: 'recovery:list',
@@ -31,6 +36,9 @@ export const IPC = {
   recoveryRead: 'recovery:read',
   recoveryRemove: 'recovery:remove',
 } as const;
+
+/** Where new versions are published; the only address the application ever contacts. */
+export const RELEASES_PAGE_URL = 'https://github.com/UkaUkaa/pdf-editor-releases/releases/latest';
 
 export const APP_PROTOCOL = 'app';
 export const APP_HOST = 'bundle';

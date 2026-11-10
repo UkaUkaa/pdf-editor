@@ -5,6 +5,7 @@ import type { PreloadApi } from '@shared/types/api';
 import type { DocumentFileKind, OpenFileResult, RecentFile, RecoveryEntry, WriteFileResult } from '@shared/types/document';
 import type { FontFaceRequest, SystemFontFamily } from '@shared/types/fonts';
 import type { AppSettings, AppSettingsPatch } from '@shared/types/settings';
+import type { UpdateState } from '@shared/types/updates';
 
 /**
  * The only bridge between the sandboxed renderer and the main process.
@@ -51,6 +52,13 @@ const api: PreloadApi = {
     list: () => ipcRenderer.invoke(IPC.recentList) as Promise<RecentFile[]>,
     add: (path: string) => ipcRenderer.invoke(IPC.recentAdd, path) as Promise<void>,
     clear: () => ipcRenderer.invoke(IPC.recentClear) as Promise<void>,
+  },
+  updates: {
+    getState: () => ipcRenderer.invoke(IPC.updatesGetState) as Promise<UpdateState>,
+    check: () => ipcRenderer.invoke(IPC.updatesCheck) as Promise<UpdateState>,
+    install: () => ipcRenderer.invoke(IPC.updatesInstall) as Promise<boolean>,
+    openDownloadPage: () => ipcRenderer.invoke(IPC.updatesOpenDownloadPage) as Promise<void>,
+    onState: (listener) => subscribe<UpdateState>(IPC.updatesState, listener),
   },
   fonts: {
     list: () => ipcRenderer.invoke(IPC.fontsList) as Promise<SystemFontFamily[]>,

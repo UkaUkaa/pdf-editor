@@ -2,6 +2,7 @@ import type { AppRole, CommandId, CommandState } from '../menu/commands';
 import type { DocumentFileKind, OpenFileResult, RecentFile, RecoveryEntry, WriteFileResult } from './document';
 import type { FontFaceRequest, SystemFontFamily } from './fonts';
 import type { AppSettings, AppSettingsPatch } from './settings';
+import type { UpdateState } from './updates';
 
 export interface AppInfo {
   name: string;
@@ -60,6 +61,17 @@ export interface PreloadApi {
     /** Records a document that was opened successfully. */
     add(path: string): Promise<void>;
     clear(): Promise<void>;
+  };
+  /** New versions of the application. */
+  updates: {
+    getState(): Promise<UpdateState>;
+    /** Looks for a newer version now, regardless of the automatic-check preference. */
+    check(): Promise<UpdateState>;
+    /** Restarts the application into a downloaded update. */
+    install(): Promise<boolean>;
+    /** Opens the download page in the browser (where the update cannot install itself). */
+    openDownloadPage(): Promise<void>;
+    onState(listener: (state: UpdateState) => void): Unsubscribe;
   };
   /** Fonts installed on the computer. Only fonts that permit embedding are offered. */
   fonts: {

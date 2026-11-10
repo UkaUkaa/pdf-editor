@@ -152,6 +152,7 @@ export const COMMANDS = def({
   'settings.languageRu': { phase: 1, kind: 'radio' },
   'settings.languageUk': { phase: 1, kind: 'radio' },
 
+  'help.checkUpdates': { phase: 8 },
   'help.about': { phase: 1 },
 });
 

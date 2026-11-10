@@ -214,6 +214,20 @@ main: readPdfFile ──IPC──► documentActions ──► loadPdf (PDF.js, 
 - **Сборка:** `electron-builder.yml` — только `out/` и `package.json` в asar, иконка из `build/icon.png`
   (`npm run icon`), предохранители Electron, ассоциации файлов.
 
+## Обновления
+
+- `main/services/updates.ts` — `UpdateService` поверх electron-updater (в неупакованной сборке библиотека не
+  загружается, состояние `unavailable`). Состояния: `idle`, `checking`, `upToDate`, `available`, `downloading`,
+  `ready`, `error`. Автоматические проверки подчиняются настройке `autoUpdate` и молчат о сбоях; проверка по
+  команде выполняется всегда и сообщает результат.
+- `canSelfInstall` — может ли платформа установить обновление сама (сейчас всё, кроме macOS). Там, где не может,
+  обновление не скачивается: пользователю показывается версия и кнопка, открывающая фиксированный адрес страницы
+  выпусков (`RELEASES_PAGE_URL`); renderer этот адрес не передаёт.
+- Сеть: electron-updater работает в main-процессе собственным сеансом; сетевой фильтр и CSP окна не ослаблены.
+- Источник задаётся в `electron-builder.yml` (`publish`) и попадает в приложение как `app-update.yml`.
+- Renderer: `features/updates/updates.ts` (состояние, однократное оповещение о каждой версии),
+  `dialogs/UpdateDialog.tsx`, команда `help.checkUpdates`, флажок в параметрах.
+
 ## Шрифты
 
 - **Встроенные** — три семейства DejaVu (`sans`, `serif`, `mono`), всегда доступны.

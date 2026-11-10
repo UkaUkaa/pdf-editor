@@ -11,8 +11,8 @@ export default defineConfig({
   main: {
     resolve: { alias },
     build: {
-      // zod is bundled so the packaged app has no runtime node_modules lookups.
-      externalizeDeps: { exclude: ['zod'] },
+      // Bundled so the packaged app has no runtime node_modules lookups.
+      externalizeDeps: { exclude: ['zod', 'electron-updater'] },
       lib: { entry: resolve(import.meta.dirname, 'src/main/index.ts'), formats: ['es'] },
     },
   },

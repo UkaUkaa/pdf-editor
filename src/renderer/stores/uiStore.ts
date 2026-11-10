@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { PasswordReason } from '../engine/pdf/types';
 
-export type DialogId = 'settings' | 'about' | 'split' | 'watermark' | 'headerFooter' | 'ocr' | 'exportImages' | 'protect';
+export type DialogId = 'settings' | 'about' | 'split' | 'watermark' | 'headerFooter' | 'ocr' | 'exportImages' | 'protect' | 'updates';
 
 export interface Notice {
   /** Translation key of the dialog title. */

@@ -45,10 +45,12 @@ export interface AppSettings {
   ocrLanguages: OcrLanguage[];
   /** Seconds between recovery copies of modified documents; 0 turns autosave off. */
   autosaveInterval: number;
+  /** Whether the application looks for new versions by itself. */
+  autoUpdate: boolean;
   layout: WorkspaceLayout;
 }
 
-export type AppSettingsPatch = Partial<Pick<AppSettings, 'language' | 'theme' | 'authorName' | 'ocrLanguages' | 'autosaveInterval'>> & {
+export type AppSettingsPatch = Partial<Pick<AppSettings, 'language' | 'theme' | 'authorName' | 'ocrLanguages' | 'autosaveInterval' | 'autoUpdate'>> & {
   layout?: Partial<WorkspaceLayout>;
 };
 
@@ -67,5 +69,6 @@ export const DEFAULT_SETTINGS: AppSettings = {
   authorName: '',
   ocrLanguages: ['eng'],
   autosaveInterval: 60,
+  autoUpdate: true,
   layout: DEFAULT_LAYOUT,
 };

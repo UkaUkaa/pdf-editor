@@ -209,7 +209,7 @@ export const MENU_MODEL: TopLevelMenu[] = [
   },
   {
     id: 'help',
-    items: [cmd('help.about')],
+    items: [cmd('help.checkUpdates'), cmd('help.about')],
   },
 ];
 

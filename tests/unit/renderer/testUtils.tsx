@@ -4,6 +4,7 @@ import type { PreloadApi } from '@shared/types/api';
 import type { OpenFileResult, RecentFile, RecoveryEntry, WriteFileResult } from '@shared/types/document';
 import type { SystemFontFamily } from '@shared/types/fonts';
 import { DEFAULT_SETTINGS, type AppSettings } from '@shared/types/settings';
+import type { UpdateState } from '@shared/types/updates';
 import { mergeSettings } from '@shared/schemas/settings';
 import {
   PdfLoadError,
@@ -14,6 +15,7 @@ import {
 import { releaseDocument } from '@renderer/engine/rendering/pageRenderer';
 import { setImageDecoder, setPdfLoader } from '@renderer/features/documents/documentActions';
 import { resetFonts } from '@renderer/engine/fonts/fontRegistry';
+import { resetUpdates } from '@renderer/features/updates/updates';
 import { resetAutosave } from '@renderer/features/project/autosave';
 import { useRecoveryStore } from '@renderer/features/project/recovery';
 import { initI18n } from '@renderer/localization/i18n';
@@ -47,6 +49,9 @@ export interface FakeApi extends PreloadApi {
   /** Paths the "operating system" asked to open before start; and a way to send more later. */
   /** Fonts "installed" on the computer. */
   systemFonts: SystemFontFamily[];
+  /** What the "main process" reports about updates, and a way to report a change. */
+  updateState: UpdateState;
+  emitUpdateState: (state: UpdateState) => void;
   openRequests: string[];
   emitOpenRequest: (paths: string[]) => void;
 }
@@ -76,6 +81,8 @@ export function createFakeApi(platform: string, initial: AppSettings = DEFAULT_S
     recoveryCopies: new Map(),
     openRequests: [],
     systemFonts: [],
+    updateState: { status: 'unavailable', currentVersion: '9.9.9', version: null, progress: null },
+    emitUpdateState: () => undefined,
     emitOpenRequest: () => undefined,
     current: () => settings,
     emitCommand: (id) => commandListeners.forEach((listener) => listener(id)),
@@ -133,6 +140,19 @@ export function createFakeApi(platform: string, initial: AppSettings = DEFAULT_S
       }),
       clear: vi.fn(async () => {
         api.recentFiles = [];
+      }),
+    },
+    updates: {
+      getState: vi.fn(async () => api.updateState),
+      check: vi.fn(async () => api.updateState),
+      install: vi.fn(async () => true),
+      openDownloadPage: vi.fn(async () => undefined),
+      onState: vi.fn((listener: (state: UpdateState) => void) => {
+        api.emitUpdateState = (state) => {
+          api.updateState = state;
+          listener(state);
+        };
+        return () => undefined;
       }),
     },
     fonts: {
@@ -254,6 +274,7 @@ export async function setupApp(options: { platform?: string; settings?: AppSetti
   setImageDecoder(decoder);
   setObjectImageDecoder(decoder);
   resetFonts();
+  resetUpdates();
   resetAutosave();
   useRecoveryStore.setState({ entries: [], open: false });
   resetToolStore();

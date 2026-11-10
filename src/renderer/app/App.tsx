@@ -6,6 +6,7 @@ import { NoticeDialog } from '../dialogs/NoticeDialog';
 import { PasswordDialog } from '../dialogs/PasswordDialog';
 import { ExportImagesDialog, OcrDialog } from '../dialogs/ProcessingDialogs';
 import { ProtectDialog } from '../dialogs/ProtectDialog';
+import { UpdateDialog } from '../dialogs/UpdateDialog';
 import { RecoveryDialog } from '../dialogs/RecoveryDialog';
 import { SettingsDialog } from '../dialogs/SettingsDialog';
 import { SplitDialog } from '../dialogs/SplitDialog';
@@ -15,6 +16,7 @@ import { useResolvedTheme } from '../hooks/useResolvedTheme';
 import { AppShell } from '../layouts/AppShell';
 import { openPaths } from '../features/documents/documentActions';
 import { useDocumentFonts } from '../hooks/useDocumentFonts';
+import { watchUpdates } from '../features/updates/updates';
 import { useAutosave } from '../features/project/autosave';
 import { checkRecovery } from '../features/project/recovery';
 import { selectActiveDocument, useDocumentsStore } from '../stores/documentsStore';
@@ -40,6 +42,9 @@ export function App(): React.JSX.Element {
   useCommandBindings(isMac);
   useAutosave();
   useDocumentFonts();
+
+  // New versions found by the main process.
+  useEffect(() => watchUpdates(), []);
 
   // Files passed by the operating system: those that came with the launch, then any later ones.
   useEffect(() => {
@@ -71,6 +76,7 @@ export function App(): React.JSX.Element {
       <AppShell isMac={isMac} />
       {dialog === 'settings' && <SettingsDialog onClose={closeDialog} />}
       {dialog === 'about' && <AboutDialog onClose={closeDialog} />}
+      {dialog === 'updates' && <UpdateDialog onClose={closeDialog} />}
       {dialog === 'protect' && <ProtectDialog onClose={closeDialog} />}
       {dialog === 'split' && <SplitDialog onClose={closeDialog} />}
       {dialog === 'watermark' && <WatermarkDialog onClose={closeDialog} />}

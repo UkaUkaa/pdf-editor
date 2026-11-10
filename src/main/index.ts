@@ -11,6 +11,7 @@ import { RecentFilesStore } from './services/recentFiles';
 import { RecoveryStore } from './services/recoveryStore';
 import { SettingsStore } from './services/settingsStore';
 import { SystemFontCatalogue } from './services/systemFonts';
+import { UpdateService, type UpdaterLike } from './services/updates';
 import { createMainWindow } from './windows/mainWindow';
 
 // Lets automated tests run against an isolated profile directory.
@@ -76,6 +77,19 @@ async function bootstrap(): Promise<void> {
       getWindow: () => mainWindow,
     });
 
+  // Only an installed build can update; the updater library is not even loaded otherwise.
+  const updater = app.isPackaged ? ((await import('electron-updater')).autoUpdater as unknown as UpdaterLike) : null;
+  const updates = new UpdateService({
+    updater,
+    currentVersion: app.getVersion(),
+    // macOS replaces an application only when it is signed with a Developer ID, which this build is not.
+    canSelfInstall: process.platform !== 'darwin',
+    isEnabled: () => settings.get().autoUpdate,
+    onState: (state) => mainWindow?.webContents.send(IPC.updatesState, state),
+    onWarning: (message) => console.warn(message),
+  });
+  updates.start();
+
   installSessionHardening();
   installAppProtocol(join(import.meta.dirname, '../renderer'));
   registerIpc({
@@ -83,6 +97,7 @@ async function bootstrap(): Promise<void> {
     recentFiles,
     recovery,
     openRequests,
+    updates,
     fonts: new SystemFontCatalogue(undefined, (message) => console.warn(message)),
     onDirtyChange: (dirty) => {
       hasUnsavedChanges = dirty;
