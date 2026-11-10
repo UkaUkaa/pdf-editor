@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2023"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/main/**/*",
+    "src/preload/**/*",
+    "src/shared/**/*",
+    "tests/unit/main/**/*",
+    "tests/unit/shared/**/*",
+    "*.config.ts",
+    "tests/unit/engine/**/*",
+    "src/renderer/engine/export/buildPdf.ts"
+  ]
+}

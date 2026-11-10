@@ -1,0 +1,64 @@
+appId: com.pdfeditor.app
+productName: PDF Editor
+copyright: Copyright © 2026
+
+directories:
+  output: dist
+  buildResources: build
+
+# Everything the application needs is bundled into `out/` by the build; the main
+# process imports nothing from node_modules at run time, so none of it is shipped.
+files:
+  - out/**
+  - package.json
+  - "!node_modules/**"
+
+asar: true
+icon: build/icon.png
+
+# Switches compiled into the Electron binary: the installed application cannot be
+# turned into a general-purpose Node.js runtime or made to load other code.
+electronFuses:
+  runAsNode: false
+  enableCookieEncryption: true
+  enableNodeOptionsEnvironmentVariable: false
+  enableNodeCliInspectArguments: false
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
+  # The bundle is served through the app:// protocol, never from file://.
+  grantFileProtocolExtraPrivileges: false
+  resetAdHocDarwinSignature: true
+
+mac:
+  category: public.app-category.productivity
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  # Signing and notarisation run only when CSC_LINK / APPLE_* credentials are present.
+  notarize: false
+
+win:
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+
+fileAssociations:
+  - ext: pdf
+    name: PDF Document
+    role: Editor
+    # The application offers itself for PDF files without taking them over from the default viewer.
+    rank: Alternate
+  - ext: pdfproject
+    name: PDF Editor Project
+    description: PDF Editor Project
+    role: Editor
+    rank: Owner
+
+publish: null

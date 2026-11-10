@@ -1,0 +1,603 @@
+{
+  "app": {
+    "name": "PDF Editor",
+    "description": "Professional PDF editor for Windows and macOS."
+  },
+  "common": {
+    "close": "Close",
+    "planned": "{{label}} — not available yet (planned for phase {{phase}})",
+    "none": "—",
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "uk": "Українська"
+  },
+  "menu": {
+    "file": "File",
+    "edit": "Edit",
+    "view": "View",
+    "insert": "Insert",
+    "pages": "Pages",
+    "tools": "Tools",
+    "arrange": "Arrange",
+    "layers": "Layers",
+    "window": "Window",
+    "settings": "Settings",
+    "help": "Help",
+    "theme": "Theme",
+    "align": "Align and Distribute",
+    "language": "Language",
+    "mainMenu": "Main menu",
+    "mac": {
+      "about": "About {{name}}",
+      "services": "Services",
+      "hide": "Hide {{name}}",
+      "hideOthers": "Hide Others",
+      "showAll": "Show All",
+      "quit": "Quit {{name}}",
+      "bringAllToFront": "Bring All to Front"
+    },
+    "goTo": "Go To",
+    "shapes": "Shape"
+  },
+  "commands": {
+    "file": {
+      "new": "New Document",
+      "open": "Open…",
+      "save": "Save",
+      "saveAs": "Save As…",
+      "saveCopy": "Save a Copy…",
+      "exportPdf": "Export as PDF…",
+      "print": "Print…",
+      "close": "Close Document",
+      "quit": "Exit",
+      "exportImages": "Export Pages as Images…",
+      "saveProject": "Save as Project…"
+    },
+    "edit": {
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "selectAll": "Select All",
+      "delete": "Delete",
+      "find": "Find…",
+      "findReplace": "Find and Replace…",
+      "duplicate": "Duplicate",
+      "findNext": "Find Next",
+      "findPrevious": "Find Previous"
+    },
+    "view": {
+      "toggleLeftPanel": "Navigation Panel",
+      "toggleRightPanel": "Properties Panel",
+      "resetLayout": "Reset Layout",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "themeSystem": "Match System",
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "fitPage": "Fit Page",
+      "fitWidth": "Fit Width",
+      "singlePage": "Single Page",
+      "continuous": "Continuous Scroll",
+      "twoPage": "Two Pages",
+      "fullScreen": "Toggle Full Screen",
+      "prevPage": "Previous Page",
+      "nextPage": "Next Page",
+      "firstPage": "First Page",
+      "lastPage": "Last Page"
+    },
+    "insert": {
+      "text": "Text",
+      "image": "Image…",
+      "link": "Link…",
+      "watermark": "Watermark…",
+      "headerFooter": "Header and Footer…",
+      "bookmark": "Bookmark",
+      "attachment": "Attachment…",
+      "shapeRect": "Rectangle",
+      "shapeEllipse": "Ellipse",
+      "shapeLine": "Line",
+      "shapeArrow": "Arrow"
+    },
+    "pages": {
+      "addBlank": "Add Blank Page",
+      "insertFromPdf": "Insert Pages from PDF…",
+      "delete": "Delete Pages",
+      "duplicate": "Duplicate Pages",
+      "rotateCw": "Rotate Clockwise",
+      "rotateCcw": "Rotate Counterclockwise",
+      "extract": "Extract Pages…",
+      "split": "Split Document…",
+      "merge": "Merge Documents…",
+      "crop": "Crop Pages",
+      "importImages": "Import Images as Pages…",
+      "reverse": "Reverse Page Order",
+      "moveUp": "Move Pages Up",
+      "moveDown": "Move Pages Down"
+    },
+    "tools": {
+      "select": "Select",
+      "hand": "Hand",
+      "editText": "Edit Text",
+      "draw": "Draw",
+      "highlight": "Highlight",
+      "comment": "Comment",
+      "eraser": "Eraser",
+      "ocr": "Recognize Text (OCR)…",
+      "compress": "Compress PDF…",
+      "protect": "Protect with Password…",
+      "underline": "Underline Text",
+      "strikethrough": "Strike Through Text",
+      "highlightText": "Highlight Text"
+    },
+    "arrange": {
+      "bringToFront": "Bring to Front",
+      "bringForward": "Bring Forward",
+      "sendBackward": "Send Backward",
+      "sendToBack": "Send to Back",
+      "alignLeft": "Align Left",
+      "alignCenter": "Align Center",
+      "alignRight": "Align Right",
+      "alignTop": "Align Top",
+      "alignMiddle": "Align Middle",
+      "alignBottom": "Align Bottom",
+      "distributeHorizontal": "Distribute Horizontally",
+      "distributeVertical": "Distribute Vertically",
+      "group": "Group",
+      "ungroup": "Ungroup",
+      "lock": "Lock",
+      "unlock": "Unlock"
+    },
+    "layers": {
+      "new": "New Layer",
+      "delete": "Delete Layer",
+      "rename": "Rename Layer",
+      "duplicate": "Duplicate Layer",
+      "moveUp": "Move Layer Up",
+      "moveDown": "Move Layer Down",
+      "merge": "Merge Layers"
+    },
+    "window": {
+      "minimize": "Minimize",
+      "maximize": "Maximize / Restore"
+    },
+    "settings": {
+      "preferences": "Preferences…",
+      "languageEn": "English",
+      "languageRu": "Русский",
+      "languageUk": "Українська"
+    },
+    "help": {
+      "about": "About PDF Editor"
+    }
+  },
+  "toolbar": {
+    "label": "Main toolbar",
+    "toggleTheme": "Switch theme",
+    "pageNumber": "Page number",
+    "pageCount": "of {{count}}",
+    "zoom": "Zoom level",
+    "shapes": "Shapes",
+    "markup": "Text markup"
+  },
+  "sidebar": {
+    "label": "Navigation panel",
+    "tabsLabel": "Navigation panel sections",
+    "collapse": "Collapse panel",
+    "resize": "Resize panel",
+    "tabs": {
+      "thumbnails": "Pages",
+      "bookmarks": "Bookmarks",
+      "outline": "Outline",
+      "attachments": "Attachments",
+      "search": "Search",
+      "layers": "Layers",
+      "comments": "Comments"
+    },
+    "empty": {
+      "thumbnails": "Page thumbnails appear here when a document is open.",
+      "bookmarks": "Bookmarks of the open document appear here.",
+      "outline": "The document outline appears here.",
+      "attachments": "Files attached to the document appear here.",
+      "search": "Search results appear here.",
+      "layers": "Layers of the current page appear here.",
+      "comments": "Comments and annotations appear here."
+    }
+  },
+  "properties": {
+    "label": "Properties panel",
+    "title": "Properties",
+    "empty": "Select an object to see its properties.",
+    "geometry": "Position and size",
+    "width": "Width",
+    "height": "Height",
+    "rotation": "Rotation",
+    "opacity": "Opacity, %",
+    "text": "Text",
+    "font": "Font",
+    "fontSize": "Size",
+    "style": "Style",
+    "bold": "Bold",
+    "italic": "Italic",
+    "align": {
+      "left": "Align left",
+      "center": "Align center",
+      "right": "Align right"
+    },
+    "color": "Color",
+    "lineHeight": "Line spacing",
+    "background": "Background",
+    "appearance": "Appearance",
+    "stroke": "Stroke",
+    "strokeWidth": "Stroke width",
+    "fill": "Fill",
+    "dashed": "Dashed line",
+    "image": "Image",
+    "flipHorizontal": "Flip horizontally",
+    "flipVertical": "Flip vertically",
+    "multiple": "Objects selected: {{count}}",
+    "types": {
+      "text": "Text",
+      "image": "Image",
+      "shape": "Shape",
+      "path": "Drawing",
+      "note": "Comment",
+      "link": "Link"
+    },
+    "toolDefaults": "New objects: {{tool}}",
+    "overlayNote": "Overlay replacement: this text sits on a cover placed over the original. The original text is still in the file underneath, and the font is the closest available one, not the original.",
+    "editTextHint": "Click a line of text on the page to replace it. The original is covered, not removed from the file.",
+    "layer": "Layer"
+  },
+  "workspace": {
+    "label": "Document workspace"
+  },
+  "status": {
+    "label": "Status bar",
+    "page": "Page",
+    "zoom": "Zoom",
+    "size": "Size",
+    "tool": "Tool",
+    "noDocument": "No document",
+    "unmodified": "No changes",
+    "modified": "Unsaved changes",
+    "pageValue": "{{page}} / {{count}}",
+    "sizeValue": "{{width}} × {{height}} mm",
+    "busy": "Working…",
+    "protection": "Protection",
+    "protected": "password"
+  },
+  "settingsDialog": {
+    "title": "Preferences",
+    "general": "General",
+    "language": "Interface language",
+    "theme": "Theme",
+    "workspace": "Workspace",
+    "showLeftPanel": "Show navigation panel",
+    "showRightPanel": "Show properties panel",
+    "resetLayout": "Restore default layout",
+    "authorName": "Author name for comments",
+    "autosave": "Recovery copies",
+    "autosaveInterval": "Save a recovery copy of changed documents",
+    "autosaveHint": "Copies are kept in the application's data folder and removed when the document is saved or closed. After a crash they are offered for recovery.",
+    "intervals": {
+      "0": "Never",
+      "30": "Every 30 seconds",
+      "60": "Every minute",
+      "300": "Every 5 minutes",
+      "600": "Every 10 minutes"
+    },
+    "custom": "Every {{count}} s"
+  },
+  "about": {
+    "title": "About",
+    "version": "Version",
+    "platform": "Platform"
+  },
+  "viewer": {
+    "label": "Document view",
+    "pageLabel": "Page {{number}}",
+    "renderError": "This page could not be displayed."
+  },
+  "thumbnails": {
+    "label": "Page thumbnails",
+    "dropHere": "Drop to move pages here"
+  },
+  "tabs": {
+    "label": "Open documents",
+    "close": "Close {{name}}"
+  },
+  "welcome": {
+    "title": "Open a PDF to get started",
+    "body": "Drag a PDF file into this window or choose one from your computer.",
+    "open": "Open PDF…",
+    "recent": "Recent documents",
+    "clearRecent": "Clear list"
+  },
+  "dialogs": {
+    "openPdf": {
+      "title": "Open PDF",
+      "filter": "PDF documents",
+      "allDocuments": "PDF documents and projects"
+    },
+    "openImages": {
+      "title": "Import Images",
+      "filter": "Images"
+    },
+    "savePdf": {
+      "title": "Save PDF"
+    },
+    "chooseFolder": {
+      "title": "Choose a Folder"
+    },
+    "unsavedQuit": {
+      "message": "There are unsaved changes.",
+      "detail": "If you close the application now, the changes will be lost.",
+      "discard": "Close Without Saving"
+    },
+    "unsavedClose": {
+      "title": "Unsaved changes",
+      "message": "“{{name}}” has unsaved changes. Save them before closing?",
+      "discard": "Don't Save"
+    },
+    "deletePages": {
+      "title": "Delete pages",
+      "message": "Delete the selected pages ({{count}})? You can undo this.",
+      "confirm": "Delete"
+    },
+    "split": {
+      "title": "Split document",
+      "label": "Pages per file",
+      "hint": "Files to be created: {{count}}",
+      "run": "Choose Folder and Split",
+      "doneTitle": "Document split",
+      "done": "Files created: {{count}}. Folder: {{directory}}"
+    },
+    "attachFiles": {
+      "title": "Attach Files"
+    },
+    "saveAttachment": {
+      "title": "Save Attachment"
+    },
+    "saveProject": {
+      "title": "Save Project",
+      "filter": "PDF Editor projects"
+    },
+    "protect": {
+      "title": "Protect with Password",
+      "password": "Password to open the document",
+      "repeat": "Repeat the password",
+      "mismatch": "The passwords do not match.",
+      "hint": "The password is required to open every PDF saved or exported from this document (AES-256). It cannot be recovered if forgotten. Project files and recovery copies are not encrypted.",
+      "current": "This document is protected with a password.",
+      "apply": "Protect",
+      "change": "Change Password",
+      "remove": "Remove Protection",
+      "show": "Show the password"
+    }
+  },
+  "errors": {
+    "openTitle": "Some files could not be opened",
+    "open": {
+      "notFound": "file not found",
+      "notPdf": "not a PDF or project file",
+      "tooLarge": "the file is too large",
+      "unreadable": "the file cannot be read",
+      "corrupt": "the file is damaged or is not a valid PDF",
+      "unknown": "the file could not be opened",
+      "notImage": "not a supported image",
+      "badImage": "the image could not be decoded",
+      "notProject": "the file is not a PDF Editor project",
+      "corruptProject": "the project file is damaged",
+      "newerVersion": "the project was saved by a newer version of the application"
+    },
+    "saveTitle": "The file could not be saved",
+    "save": {
+      "notAllowed": "writing to this location is not permitted",
+      "invalid": "the generated file is not a valid PDF",
+      "writeFailed": "the file could not be written to disk",
+      "encryptedSource": "a page comes from a password-protected file whose password is not known",
+      "missingResource": "a source of one of the pages is no longer available",
+      "validationFailed": "the generated file did not pass verification and was not saved",
+      "failed": "the PDF could not be generated",
+      "projectFailed": "the project could not be packed",
+      "restrictedSource": "the owner of a protected source file has not permitted changing or copying it"
+    }
+  },
+  "password": {
+    "title": "Password required",
+    "message": "“{{name}}” is protected. Enter the password to open it.",
+    "incorrect": "Incorrect password. Try again.",
+    "label": "Password",
+    "open": "Open"
+  },
+  "documents": {
+    "untitled": "Untitled",
+    "copySuffix": "copy",
+    "extractSuffix": "pages"
+  },
+  "tools": {
+    "select": "Select",
+    "hand": "Hand",
+    "text": "Add Text",
+    "editText": "Edit Text",
+    "rect": "Rectangle",
+    "ellipse": "Ellipse",
+    "line": "Line",
+    "arrow": "Arrow",
+    "draw": "Draw",
+    "highlight": "Highlight",
+    "eraser": "Eraser",
+    "note": "Comment",
+    "link": "Link",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "markText": "Highlight text"
+  },
+  "fonts": {
+    "sans": "DejaVu Sans",
+    "serif": "DejaVu Serif",
+    "mono": "DejaVu Sans Mono"
+  },
+  "editor": {
+    "replaceTextHint": "Click to replace this line of text",
+    "markTextHint": "Click to mark the line, or drag across part of it"
+  },
+  "layers": {
+    "newName": "Layer",
+    "defaults": {
+      "text": "Text",
+      "image": "Images",
+      "drawing": "Drawings",
+      "shapes": "Shapes",
+      "annotation": "Annotations",
+      "custom": "Layer"
+    },
+    "types": {
+      "text": "Text layer",
+      "image": "Image layer",
+      "drawing": "Drawing layer",
+      "shapes": "Shape layer",
+      "annotation": "Annotation layer",
+      "custom": "Layer"
+    },
+    "empty": "This page has no layers yet. Objects you add are placed on layers automatically.",
+    "original": "Original page content",
+    "visible": "Layer visible",
+    "locked": "Layer locked",
+    "opacity": "Layer opacity, %",
+    "showObjects": "Show objects of the layer",
+    "objectCount": "Objects on the layer",
+    "objectLocked": "Object locked",
+    "deleteTitle": "Delete layer",
+    "deleteMessage": "Delete the layer “{{name}}” together with its objects ({{count}})? You can undo this.",
+    "exportName": "{{name}} (page {{page}})"
+  },
+  "search": {
+    "placeholder": "Search in document",
+    "caseSensitive": "Match case",
+    "wholeWord": "Whole words",
+    "searching": "Searching…",
+    "noResults": "Nothing found",
+    "position": "{{current}} of {{count}}",
+    "truncated": "Only the first {{count}} results are listed.",
+    "replaceWith": "Replace with",
+    "replace": "Replace",
+    "replaceAll": "Replace All",
+    "replaceTitle": "Find and replace",
+    "replaceAllMessage": "Replace all matches ({{count}})? Text of the original pages is covered and rewritten on top, not changed in the file.",
+    "replaceSkipped": "Matches that could not be replaced because their text is rotated: {{count}}",
+    "replaceNote": "Original page text is replaced by an overlay: the line is covered and rewritten in the closest available font. The old text stays in the file underneath."
+  },
+  "bookmarks": {
+    "empty": "This document has no bookmarks. Add one for the current page with the button above.",
+    "rename": "Bookmark title",
+    "moveUp": "Move bookmark up",
+    "moveDown": "Move bookmark down",
+    "indent": "Nest under the bookmark above",
+    "outdent": "Move one level out",
+    "delete": "Delete bookmark",
+    "toggle": "Expand or collapse"
+  },
+  "stamps": {
+    "watermarkTitle": "Watermark",
+    "headerFooterTitle": "Header and footer",
+    "watermarkLayer": "Watermark",
+    "headerFooterLayer": "Header and footer",
+    "text": "Text",
+    "angle": "Angle, degrees",
+    "scope": "Pages",
+    "scopes": {
+      "all": "All pages",
+      "selection": "Selected pages"
+    },
+    "apply": "Add",
+    "header": "Header",
+    "footer": "Footer",
+    "placeholders": "Use {page} for the page number and {pages} for the page count. The numbers are fixed when added and do not follow later page changes.",
+    "alignment": "Alignment",
+    "alignments": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right"
+    },
+    "margin": "Distance from the edge, pt"
+  },
+  "comments": {
+    "empty": "No comments yet. Choose the comment tool and click on a page to add one.",
+    "anonymous": "Unknown author",
+    "text": "Comment text",
+    "placeholder": "Write a comment…",
+    "reply": "Reply…",
+    "delete": "Delete comment",
+    "deleteReply": "Delete reply",
+    "editInPanel": "The text and replies of a comment are edited in the Comments panel."
+  },
+  "links": {
+    "title": "Link",
+    "kinds": {
+      "url": "Web address",
+      "page": "Page"
+    },
+    "address": "Address",
+    "page": "Page number",
+    "invalid": "Only web (http, https) and mail addresses can be used.",
+    "follow": "Follow link",
+    "noTarget": "No target",
+    "openTitle": "Open external link?",
+    "openMessage": "This link leads outside the document:\n{{url}}\nOpen it in your browser?",
+    "open": "Open"
+  },
+  "attachments": {
+    "empty": "No files are attached to this document.",
+    "save": "Save {{name}} to disk…",
+    "remove": "Remove {{name}}"
+  },
+  "ocr": {
+    "title": "Recognize text (OCR)",
+    "languages": "Languages",
+    "language": {
+      "eng": "English",
+      "rus": "Russian",
+      "ukr": "Ukrainian"
+    },
+    "skipText": "Skip pages that already contain text",
+    "hint": "Recognition runs on this computer; pages are not sent anywhere. The recognised text is added as an invisible layer, so the pages can be searched.",
+    "start": "Recognize",
+    "progress": "Recognizing page {{done}} of {{total}}…",
+    "doneTitle": "Text recognition finished",
+    "done": "Pages with recognised text: {{count}} of {{total}}",
+    "failedTitle": "Text recognition failed",
+    "failed": "The recognition engine could not be started or stopped unexpectedly."
+  },
+  "exportImages": {
+    "title": "Export pages as images",
+    "format": "Format",
+    "resolution": "Resolution",
+    "dpi": "{{value}} dpi",
+    "quality": "JPEG quality, %",
+    "run": "Choose Folder and Export",
+    "doneTitle": "Pages exported",
+    "done": "Files created: {{count}}. Folder: {{directory}}"
+  },
+  "recovery": {
+    "title": "Recover unsaved documents",
+    "message": "The application did not close properly last time. These documents had unsaved changes:",
+    "savedAt": "last copy: {{time}}",
+    "untitled": "never saved to a file",
+    "restore": "Restore",
+    "discard": "Discard",
+    "restoreAll": "Restore All",
+    "discardAll": "Discard All",
+    "later": "Decide Later",
+    "discardConfirmTitle": "Discard recovery copies?",
+    "discardConfirm": "The unsaved changes in these copies will be lost permanently.",
+    "failedTitle": "The document could not be recovered",
+    "unreadable": "the recovery copy cannot be read"
+  }
+}

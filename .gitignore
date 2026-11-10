@@ -1,0 +1,11 @@
+node_modules/
+out/
+dist/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+*.tsbuildinfo
+src/renderer/public/pdfjs/
+src/renderer/public/fonts/
+src/renderer/public/tesseract/
