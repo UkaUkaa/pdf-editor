@@ -87,12 +87,25 @@ test('exports pages as images, recognises a scanned page and makes it searchable
   await expect(page.getByTestId('search-status')).toHaveText('Nothing found');
 
   // --- OCR ------------------------------------------------------------------------------
+  // The options dialog is still there, with the languages from the preferences.
   await menuCommand('tools.ocr');
   const ocr = page.getByRole('dialog', { name: 'Recognize text (OCR)' });
   await expect(ocr.getByRole('checkbox', { name: 'English' })).toBeChecked();
-  await ocr.getByRole('button', { name: 'Recognize' }).click();
+  await ocr.getByRole('button', { name: 'Cancel' }).click();
+
+  // The quick way: the toolbar button, "this page". Progress shows while the real engine works.
+  await page.locator('[data-action="ocr"]').click();
+  const menu = page.getByRole('menu', { name: 'Recognize text (OCR)' });
+  await expect(menu.getByRole('menuitem')).toHaveText([
+    'Recognize Text on This Page',
+    'Recognize Text in the Whole Document',
+    'Text Recognition Options…',
+  ]);
+  await menu.getByRole('menuitem', { name: 'Recognize Text on This Page' }).click();
+  await expect(ocr.getByRole('status')).toContainText('Recognizing page 1 of 1');
   const done = page.getByRole('dialog', { name: 'Text recognition finished' });
   await expect(done).toContainText('Pages with recognised text: 1 of 1', { timeout: 120_000 });
+  await expect(ocr).toHaveCount(0);
   await done.getByRole('button', { name: 'OK' }).click();
   await expect(page.getByTestId('document-status')).toHaveText('Unsaved changes');
 

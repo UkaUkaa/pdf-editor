@@ -12,7 +12,7 @@ import { cancelOcr, runOcr, setOcrEngineFactory, useOcrStore } from '@renderer/f
 import { addObject } from '@renderer/features/pdf-editor/objectActions';
 import { replaceRanges } from '@renderer/features/search/searchActions';
 import { executeCommand } from '@renderer/services/commands';
-import { getActiveDocument } from '@renderer/stores/documentsStore';
+import { getActiveDocument, useDocumentsStore } from '@renderer/stores/documentsStore';
 import { useSettingsStore } from '@renderer/stores/settingsStore';
 import { fakeFile, mockViewportSize, setupApp, type FakeApi } from './testUtils';
 
@@ -150,6 +150,47 @@ describe('text recognition', () => {
     run('view.lastPage');
     await act(async () => void (await runOcr({ languages: ['eng'], scope: 'selection', skipPagesWithText: false })));
     expect(Object.keys(doc().recognised)).toEqual([doc().pages[2]!.id]);
+  });
+
+  it('offers recognition of this page or the whole document straight from the toolbar', async () => {
+    const user = userEvent.setup();
+    const ocr = installFakeOcr();
+    await open(api, '3');
+    act(() => useSettingsStore.getState().update({ ocrLanguages: ['eng', 'ukr'] }));
+    const toolbar = within(screen.getByRole('toolbar', { name: 'Main toolbar' }));
+    const button = toolbar.getByRole('button', { name: 'Recognize text (OCR)' });
+
+    await user.click(button);
+    const menu = await screen.findByRole('menu', { name: 'Recognize text (OCR)' });
+    expect(within(menu).getAllByRole('menuitem').map((item) => item.textContent)).toEqual([
+      'Recognize Text on This Page',
+      'Recognize Text in the Whole Document',
+      'Text Recognition Options…',
+    ]);
+
+    // This page: exactly the page that is open, even with other pages selected and text already on it.
+    run('view.nextPage');
+    act(() => useDocumentsStore.getState().setSelection(doc().id, [doc().pages[0]!.id, doc().pages[1]!.id, doc().pages[2]!.id]));
+    await user.click(within(menu).getByRole('menuitem', { name: 'Recognize Text on This Page' }));
+    const done = await screen.findByRole('dialog', { name: 'Text recognition finished' });
+    expect(done).toHaveTextContent('Pages with recognised text: 1 of 1');
+    expect(Object.keys(doc().recognised)).toEqual([doc().pages[1]!.id]);
+    expect(ocr.calls).toEqual([['eng', 'ukr']]);
+    // The progress dialog has gone by itself.
+    expect(screen.queryByRole('dialog', { name: 'Recognize text (OCR)' })).not.toBeInTheDocument();
+    await user.click(within(done).getByRole('button', { name: 'OK' }));
+
+    // Whole document: every page is considered, pages that already have text are left alone.
+    await user.click(button);
+    await user.click(within(await screen.findByRole('menu', { name: 'Recognize text (OCR)' })).getByRole('menuitem', { name: 'Recognize Text in the Whole Document' }));
+    const all = await screen.findByRole('dialog', { name: 'Text recognition finished' });
+    expect(all).toHaveTextContent('Pages with recognised text: 0 of 3');
+    await user.click(within(all).getByRole('button', { name: 'OK' }));
+
+    // The third item opens the dialog with all options.
+    await user.click(button);
+    await user.click(within(await screen.findByRole('menu', { name: 'Recognize text (OCR)' })).getByRole('menuitem', { name: 'Text Recognition Options…' }));
+    expect(await screen.findByRole('dialog', { name: 'Recognize text (OCR)' })).toHaveTextContent('Skip pages that already contain text');
   });
 
   it('shows progress and can be cancelled without losing finished pages', async () => {

@@ -1,3 +1,4 @@
+import { quickOcr } from '../features/ocr/ocrActions';
 import { checkForUpdates } from '../features/updates/updates';
 import { COMMAND_IDS, getCommand, type CommandId, type CommandState } from '@shared/menu/commands';
 import type { DocumentModel, ViewMode } from '@shared/types/document';
@@ -181,6 +182,8 @@ const HANDLERS: Partial<Record<CommandId, CommandHandler>> = {
   'edit.find': { run: openSearch, isEnabled: hasDocument },
   'edit.findReplace': { run: openSearch, isEnabled: hasDocument },
   'tools.protect': { run: () => useUiStore.getState().openDialog('protect'), isEnabled: hasDocument },
+  'tools.ocrPage': { run: () => void quickOcr('current'), isEnabled: hasDocument },
+  'tools.ocrDocument': { run: () => void quickOcr('all'), isEnabled: hasDocument },
   'tools.ocr': { run: () => useUiStore.getState().openDialog('ocr'), isEnabled: hasDocument },
   'file.exportImages': { run: () => useUiStore.getState().openDialog('exportImages'), isEnabled: hasDocument },
   'edit.findNext': { run: () => stepHit(1), isEnabled: hasDocument },

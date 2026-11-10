@@ -5,6 +5,7 @@ import { ResizeHandle } from '../components/ResizeHandle';
 import { StatusBar } from '../components/StatusBar';
 import { DocumentTabs } from '../features/documents/DocumentTabs';
 import { Workspace } from '../features/workspace/Workspace';
+import { CollapsedRail } from '../panels/CollapsedRail';
 import { LeftSidebar } from '../panels/LeftSidebar';
 import { PropertiesPanel } from '../panels/PropertiesPanel';
 import { useSettingsStore } from '../stores/settingsStore';
@@ -14,7 +15,10 @@ interface AppShellProps {
   isMac: boolean;
 }
 
-/** Main window layout: menu bar, toolbar, three resizable columns and a status bar. */
+/**
+ * Main window layout: menu bar, toolbar, three resizable columns and a status bar.
+ * A collapsed side panel leaves a slim strip in its place, from which it is opened again.
+ */
 export function AppShell({ isMac }: AppShellProps): React.JSX.Element {
   const layout = useSettingsStore((state) => state.settings.layout);
   const update = useSettingsStore((state) => state.update);
@@ -31,7 +35,9 @@ export function AppShell({ isMac }: AppShellProps): React.JSX.Element {
       <Toolbar />
       <DocumentTabs />
       <div className="app__body">
-        {!layout.leftCollapsed && (
+        {layout.leftCollapsed ? (
+          <CollapsedRail side="left" />
+        ) : (
           <>
             <LeftSidebar width={leftWidth} />
             <ResizeHandle
@@ -47,7 +53,9 @@ export function AppShell({ isMac }: AppShellProps): React.JSX.Element {
           </>
         )}
         <Workspace />
-        {!layout.rightCollapsed && (
+        {layout.rightCollapsed ? (
+          <CollapsedRail side="right" />
+        ) : (
           <>
             <ResizeHandle
               side="right"

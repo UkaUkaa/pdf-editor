@@ -116,6 +116,8 @@ export const COMMANDS = def({
   'tools.highlightText': { phase: 6, kind: 'checkbox' },
   'tools.eraser': { phase: 4, kind: 'checkbox' },
   'tools.ocr': { phase: 6 },
+  'tools.ocrPage': { phase: 6 },
+  'tools.ocrDocument': { phase: 6 },
   'tools.compress': { phase: 6 },
   'tools.protect': { phase: 8 },
 

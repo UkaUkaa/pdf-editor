@@ -6,6 +6,7 @@ import type { OcrEngine } from '../../engine/ocr/tesseractEngine';
 import { getTextRuns, renderPage } from '../../engine/rendering/pageRenderer';
 import { i18n } from '../../localization/i18n';
 import { getActiveDocument, getDocument, useDocumentsStore } from '../../stores/documentsStore';
+import { useSettingsStore } from '../../stores/settingsStore';
 import { useUiStore } from '../../stores/uiStore';
 import { pagesInScope, type StampScope } from '../stamps/stampActions';
 
@@ -71,7 +72,8 @@ export function cancelOcr(): void {
 
 export interface OcrOptions {
   languages: OcrLanguage[];
-  scope: StampScope;
+  /** Every page, the selected pages, or exactly the page that is open now. */
+  scope: StampScope | 'current';
   /** Leave out pages that already have real text. */
   skipPagesWithText: boolean;
 }
@@ -84,7 +86,8 @@ export interface OcrOptions {
 export async function runOcr(options: OcrOptions): Promise<number> {
   const document = getActiveDocument();
   if (!document || useOcrStore.getState().running || options.languages.length === 0) return 0;
-  const pages = pagesInScope(document, options.scope);
+  const openPage = document.pages[document.view.currentPage];
+  const pages = options.scope === 'current' ? (openPage ? [openPage] : []) : pagesInScope(document, options.scope);
   useOcrStore.setState({ running: true, done: 0, total: pages.length, pageProgress: 0, cancelled: false });
 
   const recognised: RecognisedText = {};
@@ -134,4 +137,26 @@ export async function runOcr(options: OcrOptions): Promise<number> {
     ui.showNotice({ titleKey: 'ocr.doneTitle', lines: [i18n.t('ocr.done', { count, total: pages.length })] });
   }
   return count;
+}
+
+/**
+ * Recognition straight from the toolbar, without the options dialog: the
+ * languages from the preferences, either the page that is open or the whole
+ * document. Progress and the Cancel button are shown in the OCR dialog.
+ */
+export async function quickOcr(scope: 'current' | 'all'): Promise<number> {
+  if (!getActiveDocument() || useOcrStore.getState().running) return 0;
+  const ui = useUiStore.getState();
+  ui.openDialog('ocr');
+  try {
+    return await runOcr({
+      languages: useSettingsStore.getState().settings.ocrLanguages,
+      scope,
+      // A page the user points at is recognised even if it has some text; a whole
+      // document leaves its text pages alone.
+      skipPagesWithText: scope === 'all',
+    });
+  } finally {
+    if (useUiStore.getState().dialog === 'ocr') useUiStore.getState().closeDialog();
+  }
 }

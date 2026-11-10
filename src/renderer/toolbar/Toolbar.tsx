@@ -16,6 +16,7 @@ import {
   Pencil,
   Redo2,
   Save,
+  ScanText,
   Settings,
   Shapes,
   Sun,
@@ -46,6 +47,10 @@ const SHAPE_TOOLS: ReadonlySet<string> = new Set(['rect', 'ellipse', 'line', 'ar
 
 const MARKUP_COMMANDS: readonly ContextMenuItem[] = ['tools.highlightText', 'tools.underline', 'tools.strikethrough'];
 const MARKUP_TOOLS: ReadonlySet<string> = new Set(['markText', 'underline', 'strikethrough']);
+
+/** Text recognition: this page, the whole document, or the dialog with all options. */
+const OCR_COMMANDS: readonly ContextMenuItem[] = ['tools.ocrPage', 'tools.ocrDocument', 'separator', 'tools.ocr'];
+const NO_TOOLS: ReadonlySet<string> = new Set();
 
 interface ToolMenuButtonProps {
   label: string;
@@ -123,6 +128,8 @@ const TOOL_GROUPS: readonly ToolGroup[] = [
 const INSERT_GROUP = 3;
 /** The text-markup button belongs at the end of this group. */
 const MARKUP_GROUP = 4;
+/** The text-recognition button belongs at the end of this group. */
+const REVIEW_GROUP = 5;
 
 export function Toolbar(): React.JSX.Element {
   const { t } = useTranslation();
@@ -140,6 +147,9 @@ export function Toolbar(): React.JSX.Element {
           ))}
           {index === INSERT_GROUP && (
             <ToolMenuButton label={t('toolbar.shapes')} icon={Shapes} action="shapes" items={SHAPE_COMMANDS} tools={SHAPE_TOOLS} />
+          )}
+          {index === REVIEW_GROUP && (
+            <ToolMenuButton label={t('toolbar.ocr')} icon={ScanText} action="ocr" items={OCR_COMMANDS} tools={NO_TOOLS} />
           )}
           {index === MARKUP_GROUP && (
             <ToolMenuButton label={t('toolbar.markup')} icon={Underline} action="markup" items={MARKUP_COMMANDS} tools={MARKUP_TOOLS} />

@@ -1709,3 +1709,28 @@ fieldset {
   margin-bottom: 12px;
   accent-color: var(--color-accent, #2563eb);
 }
+
+/* --- Collapsed side panels ----------------------------------------------------------------- */
+
+.panel-rail {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) var(--space-1);
+  background: var(--color-bg-chrome);
+}
+
+.panel-rail--left {
+  border-right: 1px solid var(--color-border);
+}
+
+.panel-rail--right {
+  border-left: 1px solid var(--color-border);
+}
+
+.panel-rail__separator {
+  height: 1px;
+  margin: var(--space-1) 2px;
+  background: var(--color-border);
+}

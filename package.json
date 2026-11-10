@@ -1,7 +1,7 @@
 {
   "name": "pdf-editor",
   "productName": "PDF Editor",
-  "version": "0.11.0",
+  "version": "1.0.0",
   "description": "Professional cross-platform PDF editor",
   "private": true,
   "license": "UNLICENSED",

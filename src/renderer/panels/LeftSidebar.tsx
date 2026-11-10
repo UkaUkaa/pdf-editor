@@ -21,7 +21,7 @@ import { SearchPanel } from '../features/search/SearchPanel';
 import { selectActiveDocument, useDocumentsStore } from '../stores/documentsStore';
 import { useSettingsStore } from '../stores/settingsStore';
 
-const TAB_ICONS: Record<LeftPanelTab, LucideIcon> = {
+export const TAB_ICONS: Record<LeftPanelTab, LucideIcon> = {
   thumbnails: LayoutGrid,
   bookmarks: Bookmark,
   outline: ListTree,

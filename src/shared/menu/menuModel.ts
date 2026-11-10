@@ -140,6 +140,8 @@ export const MENU_MODEL: TopLevelMenu[] = [
       cmd('tools.strikethrough'),
       cmd('tools.eraser'),
       sep,
+      cmd('tools.ocrPage'),
+      cmd('tools.ocrDocument'),
       cmd('tools.ocr'),
       cmd('tools.compress'),
       cmd('tools.protect'),

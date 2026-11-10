@@ -128,12 +128,14 @@
       "highlight": "Highlight",
       "comment": "Comment",
       "eraser": "Eraser",
-      "ocr": "Recognize Text (OCR)…",
+      "ocr": "Text Recognition Options…",
       "compress": "Compress PDF…",
       "protect": "Protect with Password…",
       "underline": "Underline Text",
       "strikethrough": "Strike Through Text",
-      "highlightText": "Highlight Text"
+      "highlightText": "Highlight Text",
+      "ocrPage": "Recognize Text on This Page",
+      "ocrDocument": "Recognize Text in the Whole Document"
     },
     "arrange": {
       "bringToFront": "Bring to Front",
@@ -184,7 +186,8 @@
     "pageCount": "of {{count}}",
     "zoom": "Zoom level",
     "shapes": "Shapes",
-    "markup": "Text markup"
+    "markup": "Text markup",
+    "ocr": "Recognize text (OCR)"
   },
   "sidebar": {
     "label": "Navigation panel",
@@ -208,7 +211,9 @@
       "search": "Search results appear here.",
       "layers": "Layers of the current page appear here.",
       "comments": "Comments and annotations appear here."
-    }
+    },
+    "expand": "Expand panel",
+    "collapsedLabel": "Navigation panel, collapsed"
   },
   "properties": {
     "label": "Properties panel",
@@ -253,7 +258,9 @@
     "toolDefaults": "New objects: {{tool}}",
     "overlayNote": "Overlay replacement: this text sits on a cover placed over the original. The original text is still in the file underneath, and the font is the closest available one, not the original.",
     "editTextHint": "Click a line of text on the page to replace it. The original is covered, not removed from the file.",
-    "layer": "Layer"
+    "layer": "Layer",
+    "expand": "Show properties panel",
+    "collapsedLabel": "Properties panel, collapsed"
   },
   "workspace": {
     "label": "Document workspace"

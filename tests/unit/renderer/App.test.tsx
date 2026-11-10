@@ -65,6 +65,36 @@ describe('application shell', () => {
     expect(api.current().theme).toBe('dark');
   });
 
+  it('opens collapsed side panels from the strips left at the window edges', async () => {
+    const user = userEvent.setup();
+    const api = await setupApp();
+    render(<App />);
+    expect(screen.queryByRole('group', { name: 'Navigation panel, collapsed' })).not.toBeInTheDocument();
+
+    // Collapse both panels with their own buttons.
+    await user.click(within(screen.getByRole('complementary', { name: 'Navigation panel' })).getByRole('button', { name: 'Collapse panel' }));
+    await user.click(within(screen.getByRole('complementary', { name: 'Properties panel' })).getByRole('button', { name: 'Collapse panel' }));
+    expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+
+    // Each leaves a strip in its place with a button that brings it back.
+    const leftRail = screen.getByRole('group', { name: 'Navigation panel, collapsed' });
+    const rightRail = screen.getByRole('group', { name: 'Properties panel, collapsed' });
+    await user.click(within(rightRail).getByRole('button', { name: 'Show properties panel' }));
+    expect(screen.getByRole('complementary', { name: 'Properties panel' })).toBeInTheDocument();
+    expect(api.current().layout.rightCollapsed).toBe(false);
+    expect(screen.queryByRole('group', { name: 'Properties panel, collapsed' })).not.toBeInTheDocument();
+
+    // A section icon on the left strip opens the panel straight on that section.
+    await user.click(within(leftRail).getByRole('button', { name: 'Layers' }));
+    expect(api.current().layout).toMatchObject({ leftCollapsed: false, leftTab: 'layers' });
+    expect(within(screen.getByRole('complementary', { name: 'Navigation panel' })).getByRole('tab', { name: 'Layers' })).toHaveAttribute('aria-selected', 'true');
+
+    // The plain expand button keeps the section that was open before.
+    await user.click(within(screen.getByRole('complementary', { name: 'Navigation panel' })).getByRole('button', { name: 'Collapse panel' }));
+    await user.click(within(screen.getByRole('group', { name: 'Navigation panel, collapsed' })).getByRole('button', { name: 'Expand panel' }));
+    expect(api.current().layout).toMatchObject({ leftCollapsed: false, leftTab: 'layers' });
+  });
+
   it('collapses, restores and resets side panels', async () => {
     const user = userEvent.setup();
     const api = await setupApp();
