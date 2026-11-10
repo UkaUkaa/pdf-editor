@@ -116,6 +116,24 @@ async function loadSource(bytes: Uint8Array, password?: string): Promise<PDFDocu
   }
 }
 
+/**
+ * Some installed fonts (Courier New on macOS, for one) cannot be reduced to the
+ * glyphs in use: the subsetter fails on them when the file is written. That is
+ * found out here, on a throw-away document, so the real export never fails late.
+ */
+async function canSubset(bytes: Uint8Array): Promise<boolean> {
+  try {
+    const trial = await PDFDocument.create({ updateMetadata: false });
+    trial.registerFontkit(fontkit);
+    const font = await trial.embedFont(bytes, { subset: true });
+    trial.addPage().drawText('A', { font, size: 10, x: 0, y: 0 });
+    await trial.save();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function buildPdf(input: ExportInput): Promise<Uint8Array> {
   // Metadata is set explicitly; pdf-lib would otherwise stamp its own producer string.
   const output = await PDFDocument.create({ updateMetadata: false });
@@ -194,8 +212,8 @@ export async function buildPdf(input: ExportInput): Promise<Uint8Array> {
       const bytes = input.fonts?.[fileName];
       if (!bytes) throw new ExportError('missingResource');
       output.registerFontkit(fontkit);
-      // Only the glyphs actually used are embedded.
-      font = await output.embedFont(bytes, { subset: true });
+      // Only the glyphs actually used are embedded — unless the font cannot be subset, then all of it.
+      font = await output.embedFont(bytes, { subset: fileName.startsWith('system:') ? await canSubset(bytes) : true });
       embeddedFonts.set(fileName, font);
     }
     return font;

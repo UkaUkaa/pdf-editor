@@ -1,8 +1,9 @@
-import { ALL_FONT_FILES, fontFileName } from '@shared/fonts';
+import { ALL_FONT_FILES, FALLBACK_FONT, fontFileName, fontKey, isBuiltInFont } from '@shared/fonts';
 import type { Attachment, Bookmark, DocumentProtection, PageModel, RecognisedText } from '@shared/types/document';
 import type { PageLayers } from '@shared/types/layers';
 import type { PageObjects } from '@shared/types/objects';
 import { i18n } from '../../localization/i18n';
+import { getFaceBytes } from '../fonts/fontRegistry';
 import { layoutText } from '../objects/textLayout';
 import { getFileBytes, getImageAsset, getSourceBytes, getSourceProtection, getTakenAnnotations } from '../rendering/pageRenderer';
 import { buildPdf, ExportError, HIDDEN_TEXT_FONT, type ExportInput } from './buildPdf';
@@ -108,8 +109,14 @@ export async function collectExportInput(content: ExportContent): Promise<Export
       if (object.type !== 'text') continue;
       // The layout used on screen is reused verbatim, so line breaks cannot differ.
       input.textLines[object.id] = layoutText(object).lines.map(({ text, x, baseline }) => ({ text, x, baseline }));
-      const fileName = fontFileName(object.fontFamily, object);
-      input.fonts[fileName] ??= await loadFontBytes(fileName);
+      const key = fontKey(object.fontFamily, object);
+      if (input.fonts[key]) continue;
+      if (isBuiltInFont(object.fontFamily)) {
+        input.fonts[key] = await loadFontBytes(key);
+      } else {
+        // The installed font file itself; where the family is missing, the bundled font shown on screen instead.
+        input.fonts[key] = (await getFaceBytes(object.fontFamily, object)) ?? (await loadFontBytes(fontFileName(FALLBACK_FONT, object)));
+      }
     }
   }
   return input;

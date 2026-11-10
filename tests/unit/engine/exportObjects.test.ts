@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { PDFDocument, PDFName, PDFDict } from '@cantoo/pdf-lib';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { fontFileName } from '@shared/fonts';
+import { fontKey } from '@shared/fonts';
 import type { Bookmark, PageModel } from '@shared/types/document';
 import type { EditorObject, PathObject, ShapeObject, TextObject } from '@shared/types/objects';
 import { buildPdf, type ExportInput } from '@renderer/engine/export/buildPdf';
@@ -61,7 +61,7 @@ async function exportWith(page: PageModel, objects: EditorObject[]): Promise<Uin
   for (const object of objects) {
     if (object.type !== 'text') continue;
     input.textLines![object.id] = layoutText(object).lines;
-    const file = fontFileName(object.fontFamily, object);
+    const file = fontKey(object.fontFamily, object);
     input.fonts![file] = await font(file);
   }
   return buildPdf(input);

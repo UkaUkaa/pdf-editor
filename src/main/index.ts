@@ -10,6 +10,7 @@ import { documentPathsFromArgv, OpenRequestQueue } from './services/openRequests
 import { RecentFilesStore } from './services/recentFiles';
 import { RecoveryStore } from './services/recoveryStore';
 import { SettingsStore } from './services/settingsStore';
+import { SystemFontCatalogue } from './services/systemFonts';
 import { createMainWindow } from './windows/mainWindow';
 
 // Lets automated tests run against an isolated profile directory.
@@ -82,6 +83,7 @@ async function bootstrap(): Promise<void> {
     recentFiles,
     recovery,
     openRequests,
+    fonts: new SystemFontCatalogue(undefined, (message) => console.warn(message)),
     onDirtyChange: (dirty) => {
       hasUnsavedChanges = dirty;
       mainWindow?.setDocumentEdited(dirty);

@@ -1,5 +1,6 @@
 import type { AppRole, CommandId, CommandState } from '../menu/commands';
 import type { DocumentFileKind, OpenFileResult, RecentFile, RecoveryEntry, WriteFileResult } from './document';
+import type { FontFaceRequest, SystemFontFamily } from './fonts';
 import type { AppSettings, AppSettingsPatch } from './settings';
 
 export interface AppInfo {
@@ -59,6 +60,12 @@ export interface PreloadApi {
     /** Records a document that was opened successfully. */
     add(path: string): Promise<void>;
     clear(): Promise<void>;
+  };
+  /** Fonts installed on the computer. Only fonts that permit embedding are offered. */
+  fonts: {
+    list(): Promise<SystemFontFamily[]>;
+    /** Font file of one style of a listed family, or `null` when the family does not have that style. */
+    read(request: FontFaceRequest): Promise<Uint8Array | null>;
   };
   /** Copies of documents with unsaved changes, kept for recovery after a crash. */
   recovery: {

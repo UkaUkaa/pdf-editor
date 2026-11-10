@@ -15,6 +15,7 @@ import {
   type WriteFileResult,
 } from '@shared/types/document';
 import type { AppInfo } from '@shared/types/api';
+import { MAX_FONT_FAMILY_LENGTH } from '@shared/types/fonts';
 import { performRole } from '../menu/appMenu';
 import { safeExternalUrl } from '@shared/utils/externalUrl';
 import { isTrustedSender } from '../security/hardening';
@@ -35,6 +36,7 @@ import { RECOVERY_ID_PATTERN, type RecoveryStore } from '../services/recoverySto
 import type { OpenRequestQueue } from '../services/openRequests';
 import type { RecentFilesStore } from '../services/recentFiles';
 import type { SettingsStore } from '../services/settingsStore';
+import type { SystemFontCatalogue } from '../services/systemFonts';
 
 const commandIdSchema = z.enum(COMMAND_IDS as [CommandId, ...CommandId[]]);
 const commandStateSchema = z.strictObject({
@@ -52,6 +54,7 @@ const recoveryWriteSchema = z.strictObject({
   entry: z.strictObject({ id: recoveryIdSchema, name: z.string().max(300), path: pathSchema.nullable() }),
   data: bytesSchema,
 });
+const fontRequestSchema = z.strictObject({ family: z.string().min(1).max(MAX_FONT_FAMILY_LENGTH), bold: z.boolean(), italic: z.boolean() });
 const writeToDirectorySchema = z.strictObject({
   directory: pathSchema,
   fileName: z.string().min(1).max(255),
@@ -63,6 +66,7 @@ export interface IpcDependencies {
   recentFiles: RecentFilesStore;
   recovery: RecoveryStore;
   openRequests: OpenRequestQueue;
+  fonts: SystemFontCatalogue;
   onDirtyChange: (dirty: boolean) => void;
   onCommandState: (state: CommandState) => void;
 }
@@ -74,7 +78,7 @@ function assertTrusted(event: IpcMainEvent | IpcMainInvokeEvent): void {
 }
 
 /** Registers every IPC endpoint. Each one validates its sender and its payload. */
-export function registerIpc({ settings, recentFiles, recovery, openRequests, onDirtyChange, onCommandState }: IpcDependencies): void {
+export function registerIpc({ settings, recentFiles, recovery, openRequests, fonts, onDirtyChange, onCommandState }: IpcDependencies): void {
   // The renderer may only write where the user pointed: files it opened or chose in a
   // save dialog, and directories chosen in a folder dialog.
   const writableFiles = new Set<string>();
@@ -264,6 +268,17 @@ export function registerIpc({ settings, recentFiles, recovery, openRequests, onD
     assertTrusted(event);
     await recentFiles.clear();
     app.clearRecentDocuments();
+  });
+
+  ipcMain.handle(IPC.fontsList, (event) => {
+    assertTrusted(event);
+    return fonts.list();
+  });
+
+  // The renderer names a family from the list; it never supplies a path.
+  ipcMain.handle(IPC.fontsRead, (event, payload: unknown) => {
+    assertTrusted(event);
+    return fonts.read(fontRequestSchema.parse(payload));
   });
 
   ipcMain.handle(IPC.recoveryList, (event) => {

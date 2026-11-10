@@ -1,7 +1,8 @@
 import { memo } from 'react';
-import { CSS_FONT_FAMILY } from '@shared/fonts';
+import { cssFontFamily } from '@shared/fonts';
 import type { EditorObject, PathObject, ShapeObject, TextObject } from '@shared/types/objects';
 import { arrowHead } from '../../engine/export/drawObjects';
+import { effectiveVariant, useFontStore } from '../../engine/fonts/fontRegistry';
 import { layoutText } from '../../engine/objects/textLayout';
 import { getImageAsset } from '../../engine/rendering/pageRenderer';
 
@@ -12,16 +13,20 @@ export function objectTransform(object: EditorObject): string {
 }
 
 function TextContent({ object, hideText }: { object: TextObject; hideText: boolean }): React.JSX.Element {
+  // Lay the text out again once its font has finished loading.
+  useFontStore((state) => state.version);
   const { lines } = layoutText(object);
+  const variant = effectiveVariant(object.fontFamily, object);
   return (
     <>
       {object.background && <rect width={object.width} height={object.height} fill={object.background} />}
       {!hideText && (
         <text
-          fontFamily={`"${CSS_FONT_FAMILY[object.fontFamily]}"`}
+          fontFamily={cssFontFamily(object.fontFamily)}
           fontSize={object.fontSize}
-          fontWeight={object.bold ? 700 : 400}
-          fontStyle={object.italic ? 'italic' : 'normal'}
+          fontWeight={variant.bold ? 700 : 400}
+          fontStyle={variant.italic ? 'italic' : 'normal'}
+          style={{ fontSynthesis: 'none' }}
           fill={object.color}
           xmlSpace="preserve"
         >

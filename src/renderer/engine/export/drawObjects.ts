@@ -27,7 +27,7 @@ import {
   type PDFPage,
   type RGB,
 } from '@cantoo/pdf-lib';
-import { fontFileName } from '@shared/fonts';
+import { fontKey } from '@shared/fonts';
 import type { PdfBox } from '@shared/types/document';
 import type { EditorObject, PathObject, ShapeObject, TextObject } from '@shared/types/objects';
 
@@ -39,7 +39,7 @@ export interface ExportTextLine {
 }
 
 export interface DrawResources {
-  /** Resolves an embedded font by bundled file name. */
+  /** Resolves an embedded font by its key (see `fontKey`). */
   font: (fileName: string) => Promise<PDFFont>;
   image: (assetId: string) => Promise<PDFImage>;
   /** Line layout of every text object, keyed by object id. */
@@ -188,7 +188,7 @@ async function drawText(page: PDFPage, text: TextObject, resources: DrawResource
       popGraphicsState(),
     );
   }
-  const font = await resources.font(fontFileName(text.fontFamily, text));
+  const font = await resources.font(fontKey(text.fontFamily, text));
   const color = parseColor(text.color);
   for (const line of resources.textLines[text.id] ?? []) {
     if (line.text === '') continue;

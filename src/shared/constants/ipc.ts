@@ -24,6 +24,8 @@ export const IPC = {
   recentList: 'recent:list',
   recentAdd: 'recent:add',
   recentClear: 'recent:clear',
+  fontsList: 'fonts:list',
+  fontsRead: 'fonts:read',
   recoveryList: 'recovery:list',
   recoveryWrite: 'recovery:write',
   recoveryRead: 'recovery:read',

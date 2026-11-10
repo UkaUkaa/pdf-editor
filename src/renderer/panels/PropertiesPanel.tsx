@@ -1,3 +1,4 @@
+import { FontSelect } from '../components/FontSelect';
 import { useEffect, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,9 +15,7 @@ import {
 import type { DocumentModel } from '@shared/types/document';
 import type { Layer } from '@shared/types/layers';
 import {
-  FONT_FAMILIES,
   type EditorObject,
-  type FontFamily,
   type LinkObject,
   type LinkTarget,
   type ShapeObject,
@@ -154,18 +153,7 @@ function TextSection({ objects }: { objects: TextObject[] }): React.JSX.Element 
       )}
       <div className="field">
         <label htmlFor={fontId}>{t('properties.font')}</label>
-        <select
-          id={fontId}
-          className="select"
-          value={shared(objects, 'fontFamily')}
-          onChange={(event) => patch({ fontFamily: event.target.value as FontFamily }, 'font')}
-        >
-          {FONT_FAMILIES.map((family) => (
-            <option key={family} value={family}>
-              {t(`fonts.${family}`)}
-            </option>
-          ))}
-        </select>
+        <FontSelect id={fontId} value={shared(objects, 'fontFamily')} onChange={(fontFamily) => patch({ fontFamily }, 'font')} />
       </div>
       <NumberField
         label={t('properties.fontSize')}
@@ -531,18 +519,7 @@ function ToolDefaults(): React.JSX.Element | null {
         <>
           <div className="field">
             <label htmlFor={fontId}>{t('properties.font')}</label>
-            <select
-              id={fontId}
-              className="select"
-              value={style.fontFamily}
-              onChange={(event) => set('fontFamily', event.target.value as FontFamily)}
-            >
-              {FONT_FAMILIES.map((family) => (
-                <option key={family} value={family}>
-                  {t(`fonts.${family}`)}
-                </option>
-              ))}
-            </select>
+            <FontSelect id={fontId} value={style.fontFamily} onChange={(fontFamily) => set('fontFamily', fontFamily)} />
           </div>
           <NumberField
             label={t('properties.fontSize')}

@@ -24,7 +24,7 @@ test('shell starts securely, settings work and survive a restart', async () => {
     process: typeof (globalThis as Record<string, unknown>)['process'],
     apiKeys: Object.keys((globalThis as unknown as { api: object }).api).sort(),
   }));
-  expect(exposure).toEqual({ require: 'undefined', process: 'undefined', apiKeys: ['app', 'documents', 'menu', 'platform', 'recent', 'recovery', 'settings'] });
+  expect(exposure).toEqual({ require: 'undefined', process: 'undefined', apiKeys: ['app', 'documents', 'fonts', 'menu', 'platform', 'recent', 'recovery', 'settings'] });
 
   // The CSP must block inline script execution.
   const inlineRan = await page.evaluate(() => {

@@ -1,4 +1,4 @@
-import { FONT_ASCENT } from '@shared/fonts';
+import { fontAscent } from '@shared/fonts';
 import { TEXT_PADDING, type TextObject } from '@shared/types/objects';
 
 /** Returns the width of a string in points for the given text style. */
@@ -69,7 +69,7 @@ export function layoutText(object: TextObject, measure: TextMeasurer = measureTe
   const measureLine = (text: string): number => measure(text, object);
   const lineAdvance = object.fontSize * object.lineHeight;
   // Centre the glyph box within each line slot, as browsers do for line-height.
-  const firstBaseline = TEXT_PADDING + (lineAdvance - object.fontSize) / 2 + object.fontSize * FONT_ASCENT;
+  const firstBaseline = TEXT_PADDING + (lineAdvance - object.fontSize) / 2 + object.fontSize * fontAscent(object.fontFamily);
 
   const lines = wrapText(object.text, available, measureLine).map((text, index) => {
     const width = measureLine(text);

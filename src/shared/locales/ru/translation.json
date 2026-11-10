@@ -442,7 +442,11 @@
   "fonts": {
     "sans": "DejaVu Sans",
     "serif": "DejaVu Serif",
-    "mono": "DejaVu Sans Mono"
+    "mono": "DejaVu Sans Mono",
+    "bundled": "Встроенные",
+    "popular": "Популярные",
+    "installed": "Установленные на этом компьютере",
+    "missing": "{{family}} (не установлен)"
   },
   "editor": {
     "replaceTextHint": "Щёлкните, чтобы заменить эту строку текста",

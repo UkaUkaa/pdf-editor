@@ -2,6 +2,7 @@ import { vi } from 'vitest';
 import type { CommandId } from '@shared/menu/commands';
 import type { PreloadApi } from '@shared/types/api';
 import type { OpenFileResult, RecentFile, RecoveryEntry, WriteFileResult } from '@shared/types/document';
+import type { SystemFontFamily } from '@shared/types/fonts';
 import { DEFAULT_SETTINGS, type AppSettings } from '@shared/types/settings';
 import { mergeSettings } from '@shared/schemas/settings';
 import {
@@ -12,6 +13,7 @@ import {
 } from '@renderer/engine/pdf/types';
 import { releaseDocument } from '@renderer/engine/rendering/pageRenderer';
 import { setImageDecoder, setPdfLoader } from '@renderer/features/documents/documentActions';
+import { resetFonts } from '@renderer/engine/fonts/fontRegistry';
 import { resetAutosave } from '@renderer/features/project/autosave';
 import { useRecoveryStore } from '@renderer/features/project/recovery';
 import { initI18n } from '@renderer/localization/i18n';
@@ -43,6 +45,8 @@ export interface FakeApi extends PreloadApi {
   /** Contents of the recovery folder; `leftOver` marks copies from an earlier session. */
   recoveryCopies: Map<string, RecoveryEntry & { data: Uint8Array; leftOver: boolean }>;
   /** Paths the "operating system" asked to open before start; and a way to send more later. */
+  /** Fonts "installed" on the computer. */
+  systemFonts: SystemFontFamily[];
   openRequests: string[];
   emitOpenRequest: (paths: string[]) => void;
 }
@@ -71,6 +75,7 @@ export function createFakeApi(platform: string, initial: AppSettings = DEFAULT_S
     openedUrls: [],
     recoveryCopies: new Map(),
     openRequests: [],
+    systemFonts: [],
     emitOpenRequest: () => undefined,
     current: () => settings,
     emitCommand: (id) => commandListeners.forEach((listener) => listener(id)),
@@ -129,6 +134,12 @@ export function createFakeApi(platform: string, initial: AppSettings = DEFAULT_S
       clear: vi.fn(async () => {
         api.recentFiles = [];
       }),
+    },
+    fonts: {
+      list: vi.fn(async () => api.systemFonts),
+      read: vi.fn(async ({ family, bold, italic }: { family: string; bold: boolean; italic: boolean }) =>
+        new TextEncoder().encode(`font:${family}:${bold ? 'b' : ''}${italic ? 'i' : ''}`),
+      ),
     },
     recovery: {
       list: vi.fn(async () =>
@@ -242,6 +253,7 @@ export async function setupApp(options: { platform?: string; settings?: AppSetti
   };
   setImageDecoder(decoder);
   setObjectImageDecoder(decoder);
+  resetFonts();
   resetAutosave();
   useRecoveryStore.setState({ entries: [], open: false });
   resetToolStore();

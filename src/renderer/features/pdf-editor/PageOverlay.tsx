@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { CSS_FONT_FAMILY } from '@shared/fonts';
+import { cssFontFamily } from '@shared/fonts';
+import { effectiveVariant } from '../../engine/fonts/fontRegistry';
 import type { DocumentModel, PageModel } from '@shared/types/document';
 import type { Layer } from '@shared/types/layers';
 import {
@@ -131,10 +132,11 @@ function TextEditor({ object, unit, text }: TextEditorProps): React.JSX.Element 
           spellCheck={false}
           style={{
             padding: TEXT_PADDING,
-            fontFamily: `"${CSS_FONT_FAMILY[object.fontFamily]}"`,
+            fontFamily: cssFontFamily(object.fontFamily),
             fontSize: object.fontSize,
-            fontWeight: object.bold ? 700 : 400,
-            fontStyle: object.italic ? 'italic' : 'normal',
+            fontWeight: effectiveVariant(object.fontFamily, object).bold ? 700 : 400,
+            fontStyle: effectiveVariant(object.fontFamily, object).italic ? 'italic' : 'normal',
+            fontSynthesis: 'none',
             lineHeight: object.lineHeight,
             textAlign: object.align,
             color: object.color,

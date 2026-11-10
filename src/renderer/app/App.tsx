@@ -14,6 +14,7 @@ import { useCommandBindings } from '../hooks/useCommandBindings';
 import { useResolvedTheme } from '../hooks/useResolvedTheme';
 import { AppShell } from '../layouts/AppShell';
 import { openPaths } from '../features/documents/documentActions';
+import { useDocumentFonts } from '../hooks/useDocumentFonts';
 import { useAutosave } from '../features/project/autosave';
 import { checkRecovery } from '../features/project/recovery';
 import { selectActiveDocument, useDocumentsStore } from '../stores/documentsStore';
@@ -38,6 +39,7 @@ export function App(): React.JSX.Element {
   useResolvedTheme(theme);
   useCommandBindings(isMac);
   useAutosave();
+  useDocumentFonts();
 
   // Files passed by the operating system: those that came with the launch, then any later ones.
   useEffect(() => {

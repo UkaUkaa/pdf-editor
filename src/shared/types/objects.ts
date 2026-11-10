@@ -7,8 +7,15 @@
  * object clockwise around the centre of that box.
  */
 
+/** Fonts bundled with the application; they are always available. */
 export const FONT_FAMILIES = ['sans', 'serif', 'mono'] as const;
-export type FontFamily = (typeof FONT_FAMILIES)[number];
+export type BuiltInFontFamily = (typeof FONT_FAMILIES)[number];
+/**
+ * Font of a text object: one of the bundled families, or the name of a family
+ * installed on the computer (for example "Times New Roman"). A document may
+ * name a family that is not installed here; it is then shown with a bundled one.
+ */
+export type FontFamily = BuiltInFontFamily | (string & {});
 
 export const TEXT_ALIGNMENTS = ['left', 'center', 'right'] as const;
 export type TextAlign = (typeof TEXT_ALIGNMENTS)[number];

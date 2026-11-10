@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { cssFont } from '@shared/fonts';
 import { FONT_FAMILIES } from '@shared/types/objects';
 import { App } from './app/App';
+import { initFonts } from './engine/fonts/fontRegistry';
 import { installCanvasTextMeasurer } from './engine/objects/canvasMeasurer';
 import { initI18n } from './localization/i18n';
 import { initSettingsStore } from './stores/settingsStore';
@@ -22,6 +23,8 @@ async function bootstrap(): Promise<void> {
     ),
   );
   installCanvasTextMeasurer();
+  // The list of installed fonts; their files are loaded only when a document uses them.
+  await initFonts();
 
   const container = document.getElementById('root');
   if (!container) throw new Error('Root element is missing');

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import type { Attachment, Bookmark, PageModel, RecognisedText } from '../types/document';
+import { MAX_FONT_FAMILY_LENGTH } from '../types/fonts';
 import { LAYER_TYPES, type PageLayers } from '../types/layers';
 import { FONT_FAMILIES, SHAPE_KINDS, TEXT_ALIGNMENTS, type PageObjects } from '../types/objects';
 
@@ -67,7 +68,8 @@ const editorObject = z.discriminatedUnion('type', [
     ...objectBase,
     type: z.literal('text'),
     text,
-    fontFamily: z.enum(FONT_FAMILIES),
+    // A bundled family or the name of an installed one; the font file itself is not stored.
+    fontFamily: z.string().min(1).max(MAX_FONT_FAMILY_LENGTH),
     fontSize: finite.min(1).max(2_000),
     bold: z.boolean(),
     italic: z.boolean(),

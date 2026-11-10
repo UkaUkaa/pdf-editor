@@ -3,6 +3,7 @@ import { IPC } from '@shared/constants/ipc';
 import type { AppRole, CommandId, CommandState } from '@shared/menu/commands';
 import type { PreloadApi } from '@shared/types/api';
 import type { DocumentFileKind, OpenFileResult, RecentFile, RecoveryEntry, WriteFileResult } from '@shared/types/document';
+import type { FontFaceRequest, SystemFontFamily } from '@shared/types/fonts';
 import type { AppSettings, AppSettingsPatch } from '@shared/types/settings';
 
 /**
@@ -50,6 +51,10 @@ const api: PreloadApi = {
     list: () => ipcRenderer.invoke(IPC.recentList) as Promise<RecentFile[]>,
     add: (path: string) => ipcRenderer.invoke(IPC.recentAdd, path) as Promise<void>,
     clear: () => ipcRenderer.invoke(IPC.recentClear) as Promise<void>,
+  },
+  fonts: {
+    list: () => ipcRenderer.invoke(IPC.fontsList) as Promise<SystemFontFamily[]>,
+    read: (request: FontFaceRequest) => ipcRenderer.invoke(IPC.fontsRead, request) as Promise<Uint8Array | null>,
   },
   recovery: {
     list: () => ipcRenderer.invoke(IPC.recoveryList) as Promise<RecoveryEntry[]>,

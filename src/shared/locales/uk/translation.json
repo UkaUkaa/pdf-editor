@@ -442,7 +442,11 @@
   "fonts": {
     "sans": "DejaVu Sans",
     "serif": "DejaVu Serif",
-    "mono": "DejaVu Sans Mono"
+    "mono": "DejaVu Sans Mono",
+    "bundled": "Вбудовані",
+    "popular": "Популярні",
+    "installed": "Встановлені на цьому комп'ютері",
+    "missing": "{{family}} (не встановлено)"
   },
   "editor": {
     "replaceTextHint": "Клацніть, щоб замінити цей рядок тексту",
